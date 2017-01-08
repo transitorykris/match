@@ -47,4 +47,22 @@ func TestMatchIPv6(t *testing.T) {
 			So(matches[0], ShouldEqual, "9:10:11::12")
 		})
 	})
+	Convey("When looking for IPv4 addresses in a string", t, func() {
+		Convey("And it is one IPv4 address only", func() {
+			matches := MatchIPv6("1.2.3.4")
+			So(len(matches), ShouldEqual, 1)
+			So(matches[0], ShouldEqual, "1.2.3.4")
+		})
+		Convey("And it contains two in a sentence", func() {
+			matches := MatchIPv6("5.6.7.8, and 5.6.7.0/24 are cool")
+			So(len(matches), ShouldEqual, 2)
+			So(matches[0], ShouldEqual, "5.6.7.8")
+			So(matches[1], ShouldEqual, "5.6.7.0/24")
+		})
+		Convey("And it contains an obfuscated address", func() {
+			matches := MatchIPv6("9[.]10{.}11(.)12")
+			So(len(matches), ShouldEqual, 1)
+			So(matches[0], ShouldEqual, "9.10.11.12")
+		})
+	})
 }
