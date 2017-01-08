@@ -1,4 +1,4 @@
-package v6match
+package match
 
 import (
 	"testing"
@@ -24,43 +24,43 @@ func TestTrimAddress(t *testing.T) {
 	})
 }
 
-func TestMatchIPv6(t *testing.T) {
+func TestIP(t *testing.T) {
 	Convey("When looking for IPv6 addresses in a string", t, func() {
 		Convey("And it does not contain one", func() {
-			matches := MatchIP("This does not contain an IPv6 address")
+			matches := IP("This does not contain an IPv6 address")
 			So(len(matches), ShouldEqual, 0)
 		})
 		Convey("And it is an IPv6 address only", func() {
-			matches := MatchIP("1:2:3::4")
+			matches := IP("1:2:3::4")
 			So(len(matches), ShouldEqual, 1)
 			So(matches[0], ShouldEqual, "1:2:3::4")
 		})
 		Convey("And it contains two in a sentence", func() {
-			matches := MatchIP("5:6:7::8, and 2001::/32 are cool")
+			matches := IP("5:6:7::8, and 2001::/32 are cool")
 			So(len(matches), ShouldEqual, 2)
 			So(matches[0], ShouldEqual, "5:6:7::8")
 			So(matches[1], ShouldEqual, "2001::/32")
 		})
 		Convey("And it contains an obfuscated address", func() {
-			matches := MatchIP("9[:]10{:}11(::)12")
+			matches := IP("9[:]10{:}11(::)12")
 			So(len(matches), ShouldEqual, 1)
 			So(matches[0], ShouldEqual, "9:10:11::12")
 		})
 	})
 	Convey("When looking for IPv4 addresses in a string", t, func() {
 		Convey("And it is one IPv4 address only", func() {
-			matches := MatchIP("1.2.3.4")
+			matches := IP("1.2.3.4")
 			So(len(matches), ShouldEqual, 1)
 			So(matches[0], ShouldEqual, "1.2.3.4")
 		})
 		Convey("And it contains two in a sentence", func() {
-			matches := MatchIP("5.6.7.8, and 5.6.7.0/24 are cool")
+			matches := IP("5.6.7.8, and 5.6.7.0/24 are cool")
 			So(len(matches), ShouldEqual, 2)
 			So(matches[0], ShouldEqual, "5.6.7.8")
 			So(matches[1], ShouldEqual, "5.6.7.0/24")
 		})
 		Convey("And it contains an obfuscated address", func() {
-			matches := MatchIP("9[.]10{.}11(.)12")
+			matches := IP("9[.]10{.}11(.)12")
 			So(len(matches), ShouldEqual, 1)
 			So(matches[0], ShouldEqual, "9.10.11.12")
 		})

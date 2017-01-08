@@ -25,8 +25,8 @@ func stripBrackets(s string) string {
 	return clean.Replace(s)
 }
 
-// MatchIP will return a slice of all IP addresses found in a string
-func MatchIP(s string) []string {
+// IP will return a slice of all IP addresses found in a string
+func IP(s string) []string {
 	s = stripBrackets(s)
 	var matches []string
 	// We're going to check each token in the string
