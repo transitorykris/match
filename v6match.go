@@ -1,4 +1,4 @@
-package v6match
+package match
 
 import (
 	"net"
