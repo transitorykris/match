@@ -36,15 +36,15 @@ func TestMatchIPv6(t *testing.T) {
 			So(matches[0], ShouldEqual, "1:2:3::4")
 		})
 		Convey("And it contains two in a sentence", func() {
-			matches := MatchIPv6("1:2:3::4, and 2001::/32 are cool")
+			matches := MatchIPv6("5:6:7::8, and 2001::/32 are cool")
 			So(len(matches), ShouldEqual, 2)
-			So(matches[0], ShouldEqual, "1:2:3::4")
+			So(matches[0], ShouldEqual, "5:6:7::8")
 			So(matches[1], ShouldEqual, "2001::/32")
 		})
 		Convey("And it contains an obfuscated address", func() {
-			matches := MatchIPv6("1[:]2{:}3(::)4")
+			matches := MatchIPv6("9[:]10{:}11(::)12")
 			So(len(matches), ShouldEqual, 1)
-			So(matches[0], ShouldEqual, "1:2:3::4")
+			So(matches[0], ShouldEqual, "9:10:11::12")
 		})
 	})
 }
